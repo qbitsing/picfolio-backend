@@ -5,6 +5,8 @@ use App\Comment;
 use App\User;
 use Illuminate\Support\Facades\Auth;
 use App\Resources\Comment as CommentResource;
+header('Access-Control-Allow-Origin: *');
+header('Access-Control-Allow-Headers: *');
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -21,7 +23,7 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 });
 Route::post('/login', function (Request $request) {
     if (Auth::attempt(['email' => $request->email, 'password' => $request->password])) {
-        return json_encode($request->all());
+        return User::where('email', $request->email)->get()[0];
     } else return json_encode(false);
 });
 Route::post('/register', 'Auth\RegisterController@create');

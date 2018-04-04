@@ -63,6 +63,12 @@ class RegisterController extends Controller
      */
     protected function create(Request $request)
     {
+        $validator = Validator::make($request->all(), [
+            'email' => 'required|unique:users'
+        ]);
+        if ($validator->fails()) {
+            return json_encode(['status' => 400, 'message' => 'El correo ya ha sido tomado']);
+        }
         return User::create([
             'name' => $request->input('name'),
             'email' => $request->input('email'),
