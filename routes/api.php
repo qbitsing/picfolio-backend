@@ -31,4 +31,7 @@ Route::get('/comments', function (Request $request) {
     return CommentResource::collection(Comment::all());
 });
 Route::get('/posts', 'PostController@index');
+Route::get('/posts/user/{id}', 'PostController@PostUser');
 Route::post('/posts', 'PostController@store');
+
+Route::post('/comments', 'CommentController@store');
