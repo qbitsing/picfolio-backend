@@ -30,3 +30,5 @@ Route::post('/register', 'Auth\RegisterController@create');
 Route::get('/comments', function (Request $request) {
     return CommentResource::collection(Comment::all());
 });
+Route::get('/posts', 'PostController@index');
+Route::post('/posts', 'PostController@store');
