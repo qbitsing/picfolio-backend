@@ -6,11 +6,12 @@ use Illuminate\Database\Eloquent\Model;
 
 class Comment extends Model
 {
-    protected $fillable = ['post_id', 'user_id', 'comment'];
+    protected $fillable = ['comment'];
+    protected $hidden = ['post_id', 'user_id', 'updated_at'];
     public function user(){
-        $this->hasOne('App\user');
+        return $this->belongsTo('App\User');
     }
     public function post() {
-        $this->hasOne('App\Post');
+        return $this->belongsTo('App\Post');
     }
 }
