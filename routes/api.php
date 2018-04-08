@@ -26,6 +26,14 @@ Route::post('/login', function (Request $request) {
         return User::where('email', $request->email)->get()[0];
     } else return json_encode(false);
 });
+Route::post('/upload', function (Request $request) {
+    if ($request->base64) {
+        list($extencion, $data) = explode;
+    } else return json_encode([
+        'status' => 400,
+        'message' => 'Debes enviar el base64'
+    ]);
+});
 Route::post('/register', 'Auth\RegisterController@create');
 Route::get('/comments', function (Request $request) {
     return CommentResource::collection(Comment::all());
