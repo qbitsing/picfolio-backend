@@ -4,6 +4,7 @@ use Illuminate\Http\Request;
 use App\Comment;
 use App\User;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Storage;
 use App\Resources\Comment as CommentResource;
 header('Access-Control-Allow-Origin: *');
 header('Access-Control-Allow-Headers: *');
@@ -28,16 +29,22 @@ Route::post('/login', function (Request $request) {
 });
 Route::post('/upload', function (Request $request) {
     if ($request->base64) {
-        list($extencion, $data) = explode;
+        list($extencion, $data) = explode(';base64,', $request->base64);
+        list(,$extencion) = explode('/', $extencion);
+        $data = base64_decode($data);
+        $date = date('Y_m_d_h_i_s');
+        $ran = rand(0,100);
+        $name = $date . '_' . $ran;
+        Storage::put("$name.$extencion", $data, 'public');
+        return json_encode([
+            'url' => Storage::url("$name.$extencion")
+        ]);
     } else return json_encode([
         'status' => 400,
         'message' => 'Debes enviar el base64'
     ]);
 });
 Route::post('/register', 'Auth\RegisterController@create');
-Route::get('/comments', function (Request $request) {
-    return CommentResource::collection(Comment::all());
-});
 Route::get('/user/{id}', 'UserController@show');
 Route::get('/posts', 'PostController@index');
 Route::get('/user/{id}/posts', 'PostController@UserPosts');
