@@ -18,7 +18,7 @@ class CreatePostsTable extends Migration
             $table->timestamps();
             $table->integer('user_id')->unsigned();
             $table->binary('image');
-            $table->text('description');
+            $table->text('description')->nullable();
             $table->integer('likes');
             $table->foreign('user_id')->references('id')->on('users');
         });

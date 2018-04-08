@@ -30,6 +30,7 @@ Route::post('/register', 'Auth\RegisterController@create');
 Route::get('/comments', function (Request $request) {
     return CommentResource::collection(Comment::all());
 });
+Route::get('/user/{id}', 'UserController@show');
 Route::get('/posts', 'PostController@index');
 Route::get('/user/{id}/posts', 'PostController@UserPosts');
 Route::post('/posts', 'PostController@store');
