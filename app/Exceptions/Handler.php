@@ -47,9 +47,6 @@ class Handler extends ExceptionHandler
      */
     public function render($request, Exception $exception)
     {
-        return new Response([
-            'message' => 'Record not found',
-            'status' => 404
-        ], 404);
+        return parent::render($request, $exception);
     }
 }

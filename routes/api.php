@@ -35,7 +35,7 @@ Route::post('/upload', function (Request $request) {
         $date = date('Y_m_d_h_i_s');
         $ran = rand(0,100);
         $name = $date . '_' . $ran;
-        Storage::put("$name.$extencion", $data, 'public');
+        Storage::disk('public')->put("$name.$extencion", $data);
         return json_encode([
             'url' => Storage::url("$name.$extencion")
         ]);
